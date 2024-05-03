@@ -1,0 +1,13 @@
+{
+  "name": "masticode-language",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A custom programming language interpreter for mastiCode.",
+  "main": "src/compiler.js",
+  "scripts": {
+    "start": "node src/compiler.js index.masti"
+  },
+  "author": "Muhammad kamran",
+  "license": "MIT",
+  "dependencies": {}
+}

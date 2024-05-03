@@ -1,0 +1,10 @@
+chaloShuruKren {
+      rakho a = 12;
+      dikhao(a);
+   agar(a>10){
+    dikhao('a is greater than 10');
+   }nahiTo{
+    dikhao('a is less than 10');
+   };
+    basKhatam
+  }
