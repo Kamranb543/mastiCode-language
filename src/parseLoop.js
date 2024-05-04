@@ -1,14 +1,13 @@
-import { parseBlock } from "./parseIfStatement";
-import { parseExpression } from "./parsePrint";
+import { parseBlock } from "./parseIfStatement.js";
+import { parseExpression } from "./parsePrint.js";
 
 export default function parseWhileStatement(tokens, index, errors) {
   let current = index + 1; // Start after 'jabTak'
-
   if (tokens[current].type !== "paren" || tokens[current].value !== "(") {
     errors.push("Expected '(' after 'jabTak'");
     return { errors, newIndex: current };
   }
-  current++; // Move past '('
+  current++;
 
   const { expression: condition, newIndex: afterConditionIndex } =
     parseExpression(tokens, current, errors);
@@ -18,15 +17,12 @@ export default function parseWhileStatement(tokens, index, errors) {
     errors.push("Expected ')' after condition");
     return { errors, newIndex: current };
   }
-  current++; // Move past ')'
+  current++;
+  current++;
 
-  const { body: loopBody, newIndex: afterBodyIndex } = parseBlock(
-    tokens,
-    current,
-    errors
-  );
-  current = afterBodyIndex;
-
+  const data = parseBlock(tokens, current, errors);
+  const loopBody = data.ast.body;
+  current = data.newIndex;
   return {
     ast: {
       type: "WhileStatement",

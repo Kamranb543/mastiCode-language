@@ -4,7 +4,7 @@ export default function tokenizer(code) {
   const WHITESPACE = /\s/;
   const NUMBERS = /[0-9]/;
   const LETTERS = /[a-zA-Z]/;
-  const OPERATORS = /[\+\-\*\/=<>!&|]/; // Updated to include comparison and logical operators
+  const OPERATORS = /[\+\-\*\/=<>!&|]{1,2}/;
 
   const KEYWORDS = [
     "rakho",
@@ -13,7 +13,7 @@ export default function tokenizer(code) {
     "nahiTo",
     "chaloShuruKren",
     "basKhatam",
-    "dohraoJabTak", // add this line
+    "dohraoJabTak",
   ];
 
   while (current < code.length) {
@@ -85,11 +85,13 @@ export default function tokenizer(code) {
     if (OPERATORS.test(char)) {
       let operator = char;
       char = code[++current];
-      // Handle multi-character operators (like '&&', '||', '==', etc.)
+      // Handle multi-character operators (like '&&', '||', '==', '++', etc.)
       if (
         (operator === "&" && char === "&") ||
         (operator === "|" && char === "|") ||
         (operator === "=" && char === "=") ||
+        (operator === "+" && char === "+") || // Increment
+        (operator === "-" && char === "-") || // Decrement
         (operator === "!" && char === "=") ||
         (operator === ">" && char === "=") ||
         (operator === "<" && char === "=")

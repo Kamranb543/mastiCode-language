@@ -1,5 +1,6 @@
 import parseDeclaration from "./parseDeclaration.js";
 import parseIfStatement from "./parseIfStatement.js";
+import parseWhileStatement from "./parseLoop.js";
 import parsePrintStatement from "./parsePrint.js";
 
 export default function parser(tokens) {

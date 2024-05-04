@@ -30,16 +30,22 @@ export function parseExpression(tokens, index, errors) {
     return { errors, newIndex: current };
   }
 
-  let expression = operands.shift(); // Ensure at least one operand exists
-  while (operators.length > 0 && operands.length > 0) {
-    let operator = operators.shift();
-    let nextOperand = operands.shift();
+  let expression = operands.shift();
+  if (operators[0] === "++" || operators[0] === "--") {
     expression = {
-      type: expression.type,
-      value: `${expression.value} ${operator} ${nextOperand.value}`,
+      type: "unaryOperator",
+      value: `${expression.value}${operators[0]}`,
     };
+  } else {
+    while (operators.length > 0 && operands.length > 0) {
+      let operator = operators.shift();
+      let nextOperand = operands.shift();
+      expression = {
+        type: expression.type,
+        value: `${expression.value} ${operator} ${nextOperand.value}`,
+      };
+    }
   }
-
   return {
     expression: expression,
     newIndex: current,

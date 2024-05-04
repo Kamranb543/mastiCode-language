@@ -8,7 +8,6 @@ import { fileURLToPath } from "url";
 export default function compiler(code) {
   const tokens = tokenizer(code);
   const result = parser(tokens);
-
   if (result.errors.length) {
     console.log(result.errors);
   } else {
@@ -16,6 +15,7 @@ export default function compiler(code) {
     eval(generatedCode);
   }
 }
+
 const currentPath = fileURLToPath(import.meta.url);
 const scriptPath = path.resolve(process.argv[1]);
 

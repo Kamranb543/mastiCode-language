@@ -36,11 +36,13 @@ export default function codeGenerator(raw) {
 function formatValue(value, valueType) {
   switch (valueType) {
     case "string":
-      return `'${value}'`; // Wrap string values with single quotes
+      return `'${value}'`;
     case "number":
-      return value; // Use number values directly
+      return value;
     case "identifier":
-      return value; // Direct use of identifier names (assuming they are variables)
+      return value;
+    case "unaryOperator":
+      return value;
     default:
       console.error(`ERROR: Unhandled value type: ${valueType}`);
       return value; // Fallback, just in case

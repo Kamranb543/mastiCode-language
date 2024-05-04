@@ -91,14 +91,12 @@ export function parseBlock(tokens, index, errors) {
     type: "Block",
     body: [],
   };
-
   // Loop until the end of the block is reached or tokens run out
   while (
     current < tokens.length &&
     (tokens[current].type !== "block" || tokens[current].value !== "}")
   ) {
     let token = tokens[current];
-
     switch (token.value) {
       case "dikhao":
         const printResult = parsePrintStatement(tokens, current, errors);
@@ -120,15 +118,20 @@ export function parseBlock(tokens, index, errors) {
         ast.body.push(declarationResult.ast);
         current = declarationResult.newIndex;
         break;
+      case "agar":
+        const conditionResult = parseIfStatement(tokens, current, errors);
+        ast.body.push(conditionResult.ast);
+
+        current = conditionResult.newIndex;
+        break;
 
       default:
         errors.push(`Unexpected token ${token.value} at index ${current}`);
         return { ast, newIndex: current, errors };
     }
 
-    // Increment to skip past terminators or manage other control flow cases
     if (current < tokens.length && tokens[current].type === "terminator") {
-      current++; // Move past the terminator, if present
+      current++;
     }
   }
 
@@ -137,7 +140,7 @@ export function parseBlock(tokens, index, errors) {
     tokens[current].type === "block" &&
     tokens[current].value === "}"
   ) {
-    current++; // Step past the closing '}'
+    current++;
   } else {
     errors.push("Expected '}' at the end of the block.");
   }
@@ -147,5 +150,3 @@ export function parseBlock(tokens, index, errors) {
     errors: errors,
   };
 }
-// trying to make this function handle multiple lines and instead of ifelse use switch
-// i will try to re assemble full function to hanlde multiple lilnes of code
